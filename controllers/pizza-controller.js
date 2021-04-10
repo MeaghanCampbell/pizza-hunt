@@ -6,6 +6,15 @@ const pizzaController = {
     // callback for GET /api/pizzas route
     getAllPizza(req, res) {
         Pizza.find({})
+        // populate comment data to pizza
+        .populate({
+            path: 'comments',
+            //don't add __v field
+            select: '-__v'
+        })
+        .select('-__v')
+        // sort in desc order by _id value
+        .sort({ _id: -1 })
         .then(dbPizzaData => res.json(dbPizzaData))
         .catch(err => {
             console.log(err)
@@ -17,6 +26,11 @@ const pizzaController = {
     // destructure params out of the entire req
     getPizzaById({ params }, res) {
         Pizza.findOne({ _id: params.id })
+        .populate({
+            path: 'comments',
+            select: '-__v'
+        })
+        .select('-__v')
         .then(dbPizzaData => {
             // If no pizza is found, send 404
             if (!dbPizzaData) {
