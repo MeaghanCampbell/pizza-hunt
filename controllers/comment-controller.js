@@ -11,7 +11,7 @@ const commentController = {
               //$push method to add the comments _id to a pizza we want to update
               // this method adds data to an array
               { $push: { comments: _id } },
-              { new: true }
+              { new: true, runValidators: true }
             );
         })
         .then(dbPizzaData => {
@@ -29,7 +29,7 @@ const commentController = {
       Comment.findOneAndUpdate(
         { _id: params.commentId },
         { $push: { replies: body } },
-        { new: true }
+        { new: true, runValidators: true }
       )
         .then(dbPizzaData => {
           if (!dbPizzaData) {
