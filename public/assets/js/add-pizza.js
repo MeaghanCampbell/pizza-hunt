@@ -69,6 +69,8 @@ const handlePizzaSubmit = event => {
   })
   .catch(err => {
     console.log(err)
+    // for offline - browser will access data in new_pizza object store and call pizza_hunt database
+    saveRecord(formData)
   })
 };
 
